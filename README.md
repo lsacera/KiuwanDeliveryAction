@@ -1,2 +1,4 @@
 # KiuwanActions
-Kiuwan action to perform baseline and delivery analysis.
+Kiuwan action to perform delivery.
+
+NOT READY
