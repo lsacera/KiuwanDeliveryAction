@@ -1,6 +1,6 @@
-name: 'Kiuwan Baseline Analysis'
-author: 'Luis Sanchez'
-description: 'Run Kiuwan Baseline analysis on the selected set of code'
+name: 'Kiuwan Delivery Analysis'
+author: 'Kiuwan'
+description: 'Run Kiuwan Delivery Analysis on the selected set of code'
 inputs:
   project:
     description: 'Name of Kiuwan project'
@@ -15,7 +15,13 @@ inputs:
   password:
     description: 'Password for kiuwan platform'
     required: true
-
+  changerequest:
+    description: 'Change request for the delivery analysis'
+    required: false
+  branch:
+    description: 'Branch name for the delivery analysis'
+    requrired: false
+    
 branding:
   color: 'green'
   icon: 'codesandbox'
@@ -28,5 +34,7 @@ runs:
     - ${{ inputs.label }}
     - ${{ inputs.userid }}
     - ${{ inputs.password }}
+    - ${{ inputs.changerequest }}
+    - ${{ inputs.branch }}
 
     
