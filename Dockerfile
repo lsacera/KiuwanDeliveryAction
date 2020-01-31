@@ -5,4 +5,4 @@ FROM openjdk:8-jre-alpine
 COPY baseline.sh /baseline.sh
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/baseline.sh"]
+ENTRYPOINT ["/delivery.sh"]
