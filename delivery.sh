@@ -47,6 +47,10 @@ echo "--user " $INPUT_USERID
 echo "--pass " $INPUT_PASSWORD
 echo "--sourcePath" $GITHUB_WORKSPACE 
 echo "--softwareName" $INPUT_PROJECT 
-echo "--create"
+echo "--cr" $INPUT_CHANGEREQUEST
 echo "--label " $INPUT_LABEL
-$HOME/KiuwanLocalAnalyzer/bin/agent.sh --user $INPUT_USERID --pass $INPUT_PASSWORD --sourcePath \"$GITHUB_WORKSPACE\" --softwareName \"$INPUT_PROJECT\" --create --label \"$INPUT_LABEL\"
+echo "-bn" $INPUT_BRANCH
+echo "-wr" 
+
+$HOME/KiuwanLocalAnalyzer/bin/agent.sh -s \"$GITHUB_WORKSPACE\" -n \"$INPUT_PROJECT\@ -cr \"$INPUT_CHANGEREQUEST\" -l \"$INPUT_LABEL\" -bn \"INPUT_BRANCH\" -wr --user $INPUT_USERID --pass $INPUT_PASSWORD
+                         
