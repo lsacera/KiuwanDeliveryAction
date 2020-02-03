@@ -21,6 +21,12 @@ inputs:
   branch:
     description: 'Branch name for the delivery analysis'
     requrired: false
+  type:
+    description: 'Type of delivery: completeDelivery(default) or partialDelivery'
+    required: false
+  status:
+    description: 'Status of the delivery: resolved(default) or inprogress'
+    required: false
     
 branding:
   color: 'green'
