@@ -24,11 +24,11 @@ inputs:
   type:
     description: 'Type of delivery: completeDelivery(default) or partialDelivery'
     required: false
-    default: completeDelivery
+    default: 'completeDelivery'
   status:
     description: 'Status of the delivery: resolved(default) or inprogress'
     required: false
-    default: resolved
+    default: 'resolved'
     
 branding:
   color: 'green'
