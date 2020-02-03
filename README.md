@@ -14,6 +14,7 @@ Optional parameters:
 - change request: the change request id for this delivery
 - branch: the branch id for the delivery
 - type: the type of the delivery, can be partial or complete (default)
+- status: the status of the delivery, can be inprogress or resolved
 
 (*) It is higly recommended to use the userid and password as "secrets" of the repository. The secrets can be defined in the Settings options of the repository.
 
@@ -37,6 +38,8 @@ steps:
           changerequest: change request id
           # Branch
           branch: branch id
-          # Complete or partial
-          type: partial
+          # Complete or partial: completeDelivery / partialDelivery
+          type: partialDelivery
+          # Status of the delivery: inprogress / resolved
+          status: inprogress
 ```
