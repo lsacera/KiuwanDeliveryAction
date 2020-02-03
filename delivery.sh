@@ -13,5 +13,7 @@ echo "--cr" $INPUT_CHANGEREQUEST
 echo "--label " $INPUT_LABEL
 echo "-bn" $INPUT_BRANCH
 echo "-wr" 
-$HOME/KiuwanLocalAnalyzer/bin/agent.sh -s \"$GITHUB_WORKSPACE\" -n \"$INPUT_PROJECT\" -cr \"$INPUT_CHANGEREQUEST\" -l \"$INPUT_LABEL\" -bn \"$INPUT_BRANCH\" -wr --user $INPUT_USERID --pass $INPUT_PASSWORD
+echo "type" $INPUTTYPE
+echo "status" $INPUTSTATUS
+$HOME/KiuwanLocalAnalyzer/bin/agent.sh -s \"$GITHUB_WORKSPACE\" -n \"$INPUT_PROJECT\" -cr \"$INPUT_CHANGEREQUEST\" -l \"$INPUT_LABEL\" -bn \"$INPUT_BRANCH\" -wr --user $INPUT_USERID --pass $INPUT_PASSWORD -as $INPUTTYPE -crs $INPUTSTATUS
                          
