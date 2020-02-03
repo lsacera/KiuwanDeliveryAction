@@ -13,6 +13,6 @@ echo "--cr" $INPUT_CHANGEREQUEST
 echo "--label " $INPUT_LABEL
 echo "-bn" $INPUT_BRANCH
 echo "-wr" 
-echo "-as" $INPUTTYPE
-echo "-crs" $INPUTSTATUS
+echo "-as" $INPUT_TYPE
+echo "-crs" $INPUT_STATUS
 $HOME/KiuwanLocalAnalyzer/bin/agent.sh -s \"$GITHUB_WORKSPACE\" -n \"$INPUT_PROJECT\" -cr \"$INPUT_CHANGEREQUEST\" -l \"$INPUT_LABEL\" -bn \"$INPUT_BRANCH\" -wr --user $INPUT_USERID --pass $INPUT_PASSWORD -as $INPUTTYPE -crs $INPUTSTATUS                     
