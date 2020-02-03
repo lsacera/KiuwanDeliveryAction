@@ -15,4 +15,4 @@ echo "-bn" $INPUT_BRANCH
 echo "-wr" 
 echo "-as" $INPUT_TYPE
 echo "-crs" $INPUT_STATUS
-$HOME/KiuwanLocalAnalyzer/bin/agent.sh -s \"$GITHUB_WORKSPACE\" -n \"$INPUT_PROJECT\" -cr \"$INPUT_CHANGEREQUEST\" -l \"$INPUT_LABEL\" -bn \"$INPUT_BRANCH\" -wr --user $INPUT_USERID --pass $INPUT_PASSWORD -as $INPUTTYPE -crs $INPUTSTATUS                     
+$HOME/KiuwanLocalAnalyzer/bin/agent.sh -s \"$GITHUB_WORKSPACE\" -n \"$INPUT_PROJECT\" -cr \"$INPUT_CHANGEREQUEST\" -l \"$INPUT_LABEL\" -bn \"$INPUT_BRANCH\" -wr --user $INPUT_USERID --pass $INPUT_PASSWORD -as $INPUT_TYPE -crs $INPUT_STATUS                     
