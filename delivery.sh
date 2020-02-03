@@ -5,10 +5,11 @@ wget https://www.kiuwan.com/pub/analyzer/KiuwanLocalAnalyzer.zip
 unzip KiuwanLocalAnalyzer.zip -d $HOME/.
 # Check if optional parameters are empty and set the defaults
 if test -z $INPUTTYPE
-then $INPUTTYPE=completeDelivery
+then $INPUTTYPE="completeDelivery"
 fi
 if test -z $INPUTSTATUS
-then $INPUTSTATUS=resolved
+then $INPUTSTATUS="resolved"
+fi
 # STEP 3: Execute Kiuwan Delivery
 echo "Executing analyzer with"
 echo "--user " $INPUT_USERID 
