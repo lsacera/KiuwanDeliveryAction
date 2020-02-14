@@ -2,6 +2,10 @@ name: 'Kiuwan Delivery Analysis'
 author: 'Kiuwan'
 description: 'Run Kiuwan Delivery Analysis on the selected set of code'
 inputs:
+  kiuwanbaseurl:
+    description: 'Base URL of the kiuwan server. Empty to go to kiuwan.com SaaS version. Example: https://myserver.com'
+    required: false
+    default: 'https://www.kiuwan.com'
   project:
     description: 'Name of Kiuwan project'
     required: false
@@ -19,9 +23,11 @@ inputs:
   changerequest:
     description: 'Change request for the delivery analysis'
     required: false
+    default: ${{ github.event_name }}
   branch:
     description: 'Branch name for the delivery analysis'
     requrired: false
+    default: ${{ github.ref }}
   type:
     description: 'Type of delivery: completeDelivery(default) or partialDelivery'
     required: false
@@ -30,30 +36,20 @@ inputs:
     description: 'Status of the delivery: resolved(default) or inprogress'
     required: false
     default: 'resolved'
-  includepatterns:
-    description: 'List of comma separated folder expressions to include in the analysis. Example: **/test/**'
-    required: false
-  excludepatterns:
-    description: 'List of comma separated folder expressions to exclude from the analisis. Example: **/test/**'
-    required: false
   databasetype:
-    description: 'Database type files in the project, if any. Can be one of [none, transacsql, plsql, informix]'
+    description: 'Database type files in the project, if any. Can be one or more of [none, transacsql, plsql, informix]'
     required: false
     default: 'none'
-  maxmemory:
-    description: 'maximum memory allocated for java virtual machine heap, in megabytes. Example: 2048'
+  advancedparams:
+    description: 'Rest of parameters to use in the Kiuwan Local Analyzer. Please review documentation to see format at https://www.kiuwan.com/docs/display/K5/Kiuwan+Local+Analyzer+CLI+-+Command+Line+Interface'
     required: false
-    default: '1024'
-  timeout:
-    description: 'maximum time (in minutes) that the analysis is going to run before stopping.'
-    required: false
-    default: '60' 
+    default: ''
     
 outputs:
   result:
     description: 'Return code of the execution of kiuwan'
   analysisurl:
-    description: 'URL of the executed analysis'    
+    description: 'URL of the executed delivery'    
   auditresult:
     description: 'Result of the audit to check [ok | fail]'
     
