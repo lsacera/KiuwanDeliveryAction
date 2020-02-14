@@ -17,39 +17,41 @@ from pathlib import Path
 
 # Params used in the call to the baseline analysis.
 # All the parameters set in the action are stored as environment variables with INPUT_ prefix
+PARAM_KLA_KIUWANBASEURL = os.environ['INPUT_KIUWANBASEURL']
 PARAM_KLA_USERNAME = os.environ['INPUT_USERID']
 PARAM_KLA_PASSWORD = os.environ['INPUT_PASSWORD']
 PARAM_KLA_APPNAME = os.environ['INPUT_PROJECT']
 PARAM_KLA_SOURCEDIR = os.environ['GITHUB_WORKSPACE']
-PARAM_KLA_MAXMEMORY = 'memory.max=' + os.environ['INPUT_MAXMEMORY'] + 'm'
-PARAM_KLA_INCLUDEPATTERNS = os.environ['INPUT_INCLUDEPATTERNS']
-PARAM_KLA_EXCLUDEPATTERNS = os.environ['INPUT_EXCLUDEPATTERNS']
-PARAM_KLA_TIMEOUT = os.environ['INPUT_TIMEOUT']
+PARAM_KLA_CHANGEREQUEST = os.environ['INPUT_CHANGEREQUEST']
+PARAM_KLA_BRANCH = os.environ['INPUT_BRANCH']
+PARAM_KLA_TYPE = os.environ['INPUT_TYPE']
+PARAM_KLA_STATUS = os.environ['INPUT_STATUS']
 PARAM_KLA_DATABASETYPE = os.environ['INPUT_DATABASETYPE']
+PARAM_KLA_ADVANCEDPARAMS = os.environ['INPUT_ADVANCEDPARAMS']
 
-KLA_URL = 'https://www.kiuwan.com/pub/analyzer/KiuwanLocalAnalyzer.zip'
+KLA_URL = PARAM_KLA_BASEURL + '/pub/analyzer/KiuwanLocalAnalyzer.zip'
 TMP_EXTRACTION_DIR = os.environ['WORKSPACE'] + '/kla'
 KLA_EXE_DIR = TMP_EXTRACTION_DIR + "/KiuwanLocalAnalyzer/bin"
 
 
 # Function to create the Kiuwan KLA line command.
-# Note the memory parameter has been already created properly
+# It is created with the minimum amount of parameters. 
+# Then the advanced parameters are passed in, the User is responsible for a good format
 def getKLACmd(tmp_dir=TMP_EXTRACTION_DIR,
               appname=PARAM_KLA_APPNAME,
               sourcedir=PARAM_KLA_SOURCEDIR,
               user=PARAM_KLA_USERNAME,
               password=PARAM_KLA_PASSWORD,
-              mem=PARAM_KLA_MAXMEMORY):
+              scope=PARAM_KLA_TYPE,
+              changerequest=PARAM_KLA_CHANGEREQUEST,
+              branch=PARAM_KLA_BRANCH
+              dbtype=PARAM_KLA_DATABASETYPE,
+              advanced=PARAM_KLA_ADVANCEDPARAMS):
     prefix = tmp_dir + '/KiuwanLocalAnalyzer/bin/'
     agent = prefix + 'agent.sh'
     os.chmod(agent, stat.S_IRWXU)
 
-    klablcmd = '{} -c -n {} -s {} --user {} --pass {} {}'.format(agent,
-                                                                 appname,
-                                                                 sourcedir,
-                                                                 user,
-                                                                 password,
-                                                                 mem)
+    klablcmd = '{} -n {} -s {} --user {} --pass {} -as {} -cr {} -crs {} -bn {} transactsql.parser.valid.list={} {}'.format(agent, appname, sourcedir, user, password, scope, changerequest, branch, dbtype, advanced)
     return klablcmd
 
 
@@ -65,18 +67,19 @@ def downloadAndExtractKLA(tmp_dir=TMP_EXTRACTION_DIR, klaurl=KLA_URL):
     print('Extracting zip to [', tmp_dir, ']', '...')
     # Luis: para probar crear dirs
     Path(tmp_dir).mkdir(parents=True, exist_ok=True)
-
     zipf.extractall(tmp_dir)
-
 
 # Parse the output of the analysis resutl to get the analysis code
 def getBLAnalysisCodeFromKLAOutput(output_to_parse):
     return output_to_parse.split("Analysis created in Kiuwan with code:", 1)[1].split()[0]
 
-
 # Function to call the Kiuwan API to get the actual URL
 def getBLAnalysisResultsURL(a_c, kla_user=PARAM_KLA_USERNAME, kla_password=PARAM_KLA_PASSWORD):
-    apicall = "https://api.kiuwan.com/apps/analysis/" + a_c
+    apicall = "https://api.kiuwan.com"
+    if not PARAM_KLA_BASEURL:
+      apicall = PARAM_KLA_BASEURL + "/saas/rest/v1"
+    
+    apicall = apicall + "/apps/analysis/" + a_c
     print('Calling REST API [', apicall, '] ...')
 
     response = requests.get(apicall, auth=requests.auth.HTTPBasicAuth(kla_user, kla_password))
@@ -87,6 +90,22 @@ def getBLAnalysisResultsURL(a_c, kla_user=PARAM_KLA_USERNAME, kla_password=PARAM
     # print ('URL del analisis: ' , jdata['analysisURL'])
     return jdata['analysisURL']
 
+# Function to get the result of the Audit (pass or fail)
+def getAuditResult(a_c, kla_user=PARAM_KLA_USERNAME, kla_password=PARAM_KLA_PASSWORD):
+    apicall = "https://api.kiuwan.com"
+    if not PARAM_KLA_BASEURL:
+      apicall = PARAM_KLA_BASEURL + "/saas/rest/v1"
+    
+    apicall = apicall + "/auditResult?deliveryCode=" + a_c
+    print('Calling REST API [', apicall, '] ...')
+
+    response = requests.get(apicall, auth=requests.auth.HTTPBasicAuth(kla_user, kla_password))
+
+    print(response)
+    print('Contenido', response.content)
+    jdata = json.loads(response.content)
+    # print ('URL del analisis: ' , jdata['analysisURL'])
+    return jdata['passAudit']
 
 # Function to excetute the actual Kiuwan Local Analyzer command line and get the resutls.
 def executeKLA(cmd):
@@ -125,6 +144,9 @@ if rc == 0:
     print('Analysis code [', analysis_code, ']')
     url_analysis = getBLAnalysisResultsURL(analysis_code)
     print('URL del analisis: ', url_analysis)
+    audit_result = getAuditResult(analysis_code)
+    print('Resultado de la auditoria: ', audit_result)
     print("::set-output name=analysisurl::{}".format(url_analysis))
+    print("::set-oputut name=auditresult::{}".format(audit_result))
 else:
     print('{}{}{}'.format('Analysis finished with error code [', rc, ']'))
