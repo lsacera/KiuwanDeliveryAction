@@ -142,8 +142,9 @@ if rc == 0:
     analysis_code = getBLAnalysisCodeFromKLAOutput(output)
     print('Analysis code [', analysis_code, ']')
     url_analysis = getBLAnalysisResultsURL(analysis_code)
-    print('URL del analisis: ', url_analysis)
     audit_result = getAuditResult(analysis_code)
+    #print traces and set output parameters...
+    print('URL del analisis: ', url_analysis)
     print('Resultado de la auditoria: ', audit_result)
     print("::set-output name=analysisurl::{}".format(url_analysis))
     print("::set-oputut name=auditresult::{}".format(audit_result))
