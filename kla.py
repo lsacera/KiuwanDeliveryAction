@@ -52,7 +52,7 @@ def getKLACmd(tmp_dir=TMP_EXTRACTION_DIR,
     agent = prefix + 'agent.sh'
     os.chmod(agent, stat.S_IRWXU)
 
-    klablcmd = '{} -n {} -s {} --user {} --pass {} -as {} -cr {} -crs {} -bn {} transactsql.parser.valid.list={} {}'.format(agent, appname, sourcedir, user, password, scope, changerequest, status, branch, dbtype, advanced)
+    klablcmd = '{} -n {} -s {} --user {} --pass {} -as {} -cr {} -crs {} -bn {} -wr transactsql.parser.valid.list={} {}'.format(agent, appname, sourcedir, user, password, scope, changerequest, status, branch, dbtype, advanced)
     return klablcmd
 
 
@@ -97,7 +97,7 @@ def getAuditResult(a_c, kla_user=PARAM_KLA_USERNAME, kla_password=PARAM_KLA_PASS
       apicall = PARAM_KLA_KIUWANBASEURL + "/saas/rest/v1"
     
     apicall = apicall + "/auditResult?deliveryCode=" + a_c
-    print('Calling REST API [', apicall, '] with user ' + kla_user + ' and pass' + kla_password + '...')
+    print('Calling REST API [', apicall, '] ...')
 
     response = requests.get(apicall, auth=requests.auth.HTTPBasicAuth(kla_user, kla_password))
 
@@ -129,34 +129,23 @@ def executeKLA(cmd):
 
 # Actual executing code after defining the functions
 # Extract and download KLA from kiuwan.com (or from on-premise site)
-#luis
-#downloadAndExtractKLA(tmp_dir=TMP_EXTRACTION_DIR)
+downloadAndExtractKLA(tmp_dir=TMP_EXTRACTION_DIR)
 
 # Build the KLA CLI command
-#luis
-#kla_bl_cmd = getKLACmd(tmp_dir=TMP_EXTRACTION_DIR)
+kla_bl_cmd = getKLACmd(tmp_dir=TMP_EXTRACTION_DIR)
 
 # Execute CLA KLI and set results as outputs
-#luis
-#output, rc = executeKLA(kla_bl_cmd)
-#print("::set-output name=result::{}".format(rc))
-#if rc == 0:
-#    print('{}{}'.format('KLA return code: ', rc))
-#    analysis_code = getBLAnalysisCodeFromKLAOutput(output)
-#    print('Analysis code [', analysis_code, ']')
-#    url_analysis = getBLAnalysisResultsURL(analysis_code)
-#    print('URL del analisis: ', url_analysis)
-#    audit_result = getAuditResult(analysis_code)
-#    print('Resultado de la auditoria: ', audit_result)
-#    print("::set-output name=analysisurl::{}".format(url_analysis))
-#    print("::set-oputut name=auditresult::{}".format(audit_result))
-#else:
-#    print('{}{}{}'.format('Analysis finished with error code [', rc, ']'))
-#
-# luis pruebas
-url_analysis = getBLAnalysisResultsURL('A-7e4-1705d3612e2')
-print('URL del analisis: ', url_analysis)
-audit_result = getAuditResult('A-7e4-1705d3612e2')
-print('Resultado de la auditoria: ', audit_result)
-print("::set-output name=analysisurl::{}".format(url_analysis))
-print("::set-oputut name=auditresult::{}".format(audit_result))
+output, rc = executeKLA(kla_bl_cmd)
+print("::set-output name=result::{}".format(rc))
+if rc == 0:
+    print('{}{}'.format('KLA return code: ', rc))
+    analysis_code = getBLAnalysisCodeFromKLAOutput(output)
+    print('Analysis code [', analysis_code, ']')
+    url_analysis = getBLAnalysisResultsURL(analysis_code)
+    print('URL del analisis: ', url_analysis)
+    audit_result = getAuditResult(analysis_code)
+    print('Resultado de la auditoria: ', audit_result)
+    print("::set-output name=analysisurl::{}".format(url_analysis))
+    print("::set-oputut name=auditresult::{}".format(audit_result))
+else:
+    print('{}{}{}'.format('Analysis finished with error code [', rc, ']'))
