@@ -44,6 +44,7 @@ def getKLACmd(tmp_dir=TMP_EXTRACTION_DIR,
               password=PARAM_KLA_PASSWORD,
               scope=PARAM_KLA_TYPE,
               changerequest=PARAM_KLA_CHANGEREQUEST,
+              status=PARAM_KLA_STATUS,
               branch=PARAM_KLA_BRANCH,
               dbtype=PARAM_KLA_DATABASETYPE,
               advanced=PARAM_KLA_ADVANCEDPARAMS):
@@ -51,7 +52,7 @@ def getKLACmd(tmp_dir=TMP_EXTRACTION_DIR,
     agent = prefix + 'agent.sh'
     os.chmod(agent, stat.S_IRWXU)
 
-    klablcmd = '{} -n {} -s {} --user {} --pass {} -as {} -cr {} -crs {} -bn {} transactsql.parser.valid.list={} {}'.format(agent, appname, sourcedir, user, password, scope, changerequest, branch, dbtype, advanced)
+    klablcmd = '{} -n {} -s {} --user {} --pass {} -as {} -cr {} -crs {} -bn {} transactsql.parser.valid.list={} {}'.format(agent, appname, sourcedir, user, password, scope, changerequest, status, branch, dbtype, advanced)
     return klablcmd
 
 
