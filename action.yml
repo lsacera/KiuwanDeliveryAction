@@ -51,7 +51,7 @@ outputs:
   analysisurl:
     description: 'URL of the executed delivery'    
   auditresult:
-    description: 'Result of the audit to check [ok | fail]'
+    description: 'Result of the audit to check [true | fail]'
     
 branding:
   color: 'green'
