@@ -5,12 +5,16 @@ Usage:
 Add the action in any workflow in your repository --> Actions.
 
 Required parameters:
-- project: the name of the application in kiuwan. If it does not exist, it will create a new one.
 - userid: the username of your kiuwan account (*)
 - password: the password of your kiuwan account (*)
 
 Optional parameters:
-- label: the selected label for the analysis. 
+- kiuwanbaseurl: Kiuwan server used to perform the analysis. The default value is https://www.kiuwan.com
+- project name: Name of the project. If not provided, the github repository name is used (owner/project format)
+- label: Selected label for the analysis. If not provided, the run number will be used
+- databasetype: Database type files in the project, if any. Can be one or more of [none, transacsql, plsql, informix]
+- advancedparams: Rest of parameters to be used in the baseline. For a comprehensive list of options, please visit.
+https://www.kiuwan.com/docs/display/K5/Kiuwan+Local+Analyzer+CLI+-+Command+Line+Interface
 - change request: the change request id for this delivery
 - branch: the branch id for the delivery
 - type: the type of the delivery, can be partial or complete (default)
