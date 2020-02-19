@@ -29,7 +29,7 @@ PARAM_KLA_STATUS = os.environ['INPUT_STATUS']
 PARAM_KLA_DATABASETYPE = os.environ['INPUT_DATABASETYPE']
 PARAM_KLA_ADVANCEDPARAMS = os.environ['INPUT_ADVANCEDPARAMS']
 
-KLA_URL = PARAM_KLA_BASEURL + '/pub/analyzer/KiuwanLocalAnalyzer.zip'
+KLA_URL = PARAM_KLA_KIUWANBASEURL + '/pub/analyzer/KiuwanLocalAnalyzer.zip'
 TMP_EXTRACTION_DIR = os.environ['WORKSPACE'] + '/kla'
 KLA_EXE_DIR = TMP_EXTRACTION_DIR + "/KiuwanLocalAnalyzer/bin"
 
