@@ -88,7 +88,6 @@ def getBLAnalysisResultsURL(a_c, kla_user=PARAM_KLA_USERNAME, kla_password=PARAM
     print(response)
     print('Contenido', response.content)
     jdata = json.loads(response.content)
-    # print ('URL del analisis: ' , jdata['analysisURL'])
     return jdata['auditResultURL']
 
 # Function to get the result of the Audit (pass or fail)
@@ -105,7 +104,6 @@ def getAuditResult(a_c, kla_user=PARAM_KLA_USERNAME, kla_password=PARAM_KLA_PASS
     print(response)
     print('Contenido', response.content)
     jdata = json.loads(response.content)
-    # print ('URL del analisis: ' , jdata['analysisURL'])
     return jdata['passAudit']
 
 # Function to excetute the actual Kiuwan Local Analyzer command line and get the resutls.
