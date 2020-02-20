@@ -52,6 +52,8 @@ outputs:
     description: 'URL of the executed delivery'    
   auditresult:
     description: 'Result of the audit to check [true | fail]'
+  message: 
+    description: 'Result message for the execution"
     
 branding:
   color: 'green'
