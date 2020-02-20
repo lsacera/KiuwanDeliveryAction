@@ -147,7 +147,7 @@ if rc==0:
   print('URL del analisis: ', url_analysis)
   print('Resultado de la auditoria: ', audit_result)
   print("::set-output name=analysisurl::{}".format(url_analysis))
-  print("::set-oputut name=auditresult::{}".format(audit_result)
+  print("::set-oputut name=auditresult::{}".format(audit_result))
   print('::set-output name=message::Delivery analysis successful.')
 elif rc == 1:
   print('::set-output name=message::Analyzer execution error.')
