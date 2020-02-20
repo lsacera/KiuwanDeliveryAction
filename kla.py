@@ -198,8 +198,8 @@ elif rc == 33:
   print('::set-output name=message::Out of Memory.')
 elif rc == 34:
   print('::set-output name=message::JVM Error	.')
-else
+else:
   print('::set-output name=message::No error message found.')
-   
+
     
     
