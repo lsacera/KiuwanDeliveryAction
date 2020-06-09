@@ -28,7 +28,7 @@ steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
       - name: Kiuwan Delivery Analysis
-        uses: lsacera/KiuwanDeliveryActions@v0.4
+        uses: lsacera/KiuwanDeliveryAction@v0.4
         with:
           # Name of Kiuwan project
           project: Personalblog
