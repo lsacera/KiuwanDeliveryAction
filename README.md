@@ -27,8 +27,8 @@ Example of usage as step in a workflow:
 steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
-      - name: Kiuwan Baseline Analysis
-        uses: lsacera/KiuwanActions@v0.3
+      - name: Kiuwan Delivery Analysis
+        uses: lsacera/KiuwanDeliveryActions@v0.4
         with:
           # Name of Kiuwan project
           project: Personalblog
